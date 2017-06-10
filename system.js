@@ -10,7 +10,11 @@ const createSystem = (elevatorCount, floorCount) => {
   elevators = _.times(elevatorCount, createElevatorState.bind(null, floorCount))
 
   return {
-    elevators: elevators
+    elevators: elevators,
+    request: function(from, to) {
+      this.requests.push({from: from, to: to})
+    },
+    requests: []
   }
 }
 

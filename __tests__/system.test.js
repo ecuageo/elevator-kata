@@ -10,3 +10,9 @@ test('createSystem returns a few elevators', () => {
   expect(system.elevators).toEqual([{state: "CLOSED", floor: 1},{state: "CLOSED", floor: 1},{state: "CLOSED", floor: 1}])
 })
 
+test('createSystem accepts a request and stores it', () => {
+  const system = createSystem(1, 3)
+  system.request(2, 3)
+  expect(system.requests).toEqual([{from: 2, to: 3}])
+})
+
