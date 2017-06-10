@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 const createElevatorState = (floorCount, id) => (
-  {state: "CLOSED", floor: 1}
+  {id: id, state: "CLOSED", floor: 1}
 )
 
 let elevators
