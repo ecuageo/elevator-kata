@@ -5,14 +5,20 @@ const createController = (system) => {
     const requests = system.requests
     system.requests = []
 
-    const request = requests[0]
+    _.each(requests, (request) => {
+      const requestGoing = request.from > request.to ? "DOWN" : "UP"
 
-    const elevatorState = _.sortBy(system.elevators, (elevator) => (
-      Math.abs(elevator.floor - request.from)
-    ))[0]
+      const elevatorState = _.chain(system.elevators)
+        .filter(elevator => (
+          elevator.going === undefined || elevator.going === requestGoing
+        )).sortBy(elevator => {
+          Math.abs(elevator.floor - request.from)
+        })[0]
 
-    elevatorState.stops = [request.from, request.to]
-    elevatorState.state = "MOVING"
+      elevatorState.stops = [request.from, request.to]
+      elevatorState.state = "MOVING"
+      elevatorState.going = requestGoing
+    })
   }
 }
 
