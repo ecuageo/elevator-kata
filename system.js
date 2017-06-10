@@ -1,20 +1,23 @@
 import _ from 'lodash'
+import createController from './controller.js'
 
 const createElevatorState = (floorCount, id) => (
   {id: id, state: "CLOSED", floor: 1}
 )
 
-let elevators
-
 const createSystem = (elevatorCount, floorCount) => {
-  elevators = _.times(elevatorCount, createElevatorState.bind(null, floorCount))
+  const elevators = _.times(elevatorCount, createElevatorState.bind(null, floorCount))
 
   return {
     elevators: elevators,
     request: function(from, to) {
       this.requests.push({from: from, to: to})
     },
-    requests: []
+    requests: [],
+    start: function() {
+      const controlElevators = createController(this)
+      setInterval(controlElevators, 1000)
+    }
   }
 }
 

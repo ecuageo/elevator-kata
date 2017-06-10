@@ -5,7 +5,7 @@ const createController = (system) => {
     const requests = system.requests
     system.requests = []
 
-    _.each(requests, (request) => {
+    _.each(requests, request => {
       const requestGoing = request.from > request.to ? "DOWN" : "UP"
 
       const elevatorState = _.chain(system.elevators)
@@ -18,6 +18,12 @@ const createController = (system) => {
       elevatorState.stops = [request.from, request.to]
       elevatorState.state = "MOVING"
       elevatorState.going = requestGoing
+    })
+
+    _.each(system.elevators, elevator => {
+      // Move Elevators
+      // Report Changes
+      // Check for # of Trips
     })
   }
 }
